@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notification Example</title>
+</head>
+<body>
+  <script>
+    function showNotification() {
+      // Verificar si el navegador soporta notificaciones
+      if (!("Notification" in window)) {
+        alert("Este navegador no soporta notificaciones de escritorio.");
+      }
+
+      // Verificar si el usuario ha dado permisos para notificaciones
+      else if (Notification.permission === "granted") {
+        // Crear una notificación
+        var notification = new Notification("Booking Pending Alert", {
+          body: "El booking sigue pendiente. Reproduciendo sonido de alerta...",
+          icon: "icon.png" // opcional, agregar un icono
+        });
+
+        // Reproducir el sonido
+        var audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+        audio.play();
+      }
+
+      // Pedir permiso para mostrar notificaciones
+      else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === "granted") {
+            var notification = new Notification("Booking Pending Alert", {
+              body: "El booking sigue pendiente. Reproduciendo sonido de alerta...",
+              icon: "icon.png" // opcional, agregar un icono
+            });
+
+            // Reproducir el sonido
+            var audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+            audio.play();
+          }
+        });
+      }
+    }
+
+    // Llamar a la función para mostrar la notificación
+    showNotification();
+  </script>
+</body>
+</html>
